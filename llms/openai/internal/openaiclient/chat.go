@@ -492,7 +492,7 @@ func combineStreamingChatResponse(
 			continue
 		}
 		choice := streamResponse.Choices[0]
-		chunk := []byte(choice.Delta.Content)
+		chunk, _ := json.Marshal(streamResponse)
 		response.Choices[0].Message.Content += choice.Delta.Content
 		response.Choices[0].FinishReason = choice.FinishReason
 		response.Choices[0].Message.ReasoningContent = choice.Delta.ReasoningContent
@@ -511,6 +511,12 @@ func combineStreamingChatResponse(
 			if err != nil {
 				return nil, fmt.Errorf("streaming func returned an error: %w", err)
 			}
+		}
+	}
+	if payload.StreamingFunc != nil {
+		err := payload.StreamingFunc(ctx, []byte("[DONE]"))
+		if err != nil {
+			return nil, fmt.Errorf("streaming func returned an error: %w", err)
 		}
 	}
 	return &response, nil
