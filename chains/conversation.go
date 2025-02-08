@@ -8,7 +8,7 @@ import (
 )
 
 //nolint:lll
-const _conversationTemplate = `The following is a friendly conversation between a human and an AI. The AI is talkative and provides lots of specific details from its context. If the AI does not know the answer to a question, it truthfully says it does not know.
+const _conversationTemplate = `The following is a friendly conversation between a human and an AI. The AI is talkative and provides lots of specific details from its context. If the AI does not know the answer to a question, it truthfully says it does not know,Finally, the content is all replied in zh_CN encoding
 
 Current conversation:
 {{.history}}
